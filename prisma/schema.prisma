@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  EXPIRED
+}
+
+model Merchant {
+  id               String   @id @default(cuid())
+  name             String
+  recipientAddress String
+  createdAt        DateTime @default(now())
+  invoices         Invoice[]
+
+  lastInvoiceId    String?
+  lastInvoiceAt    DateTime?
+}
+
+model Invoice {
+  id               String        @id @default(cuid())
+  merchantId       String
+  merchant         Merchant      @relation(fields: [merchantId], references: [id])
+  amount           String
+  token            String        @default("USDC")
+  chain            String        @default("arbitrum")
+  recipientAddress String
+  memo             String?
+  expiresAt        DateTime
+  status           InvoiceStatus @default(PENDING)
+  txHash           String?
+  payerAddress     String?
+  createdAt        DateTime      @default(now())
+  paidAt           DateTime?
+}
