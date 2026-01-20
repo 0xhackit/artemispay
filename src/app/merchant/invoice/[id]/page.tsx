@@ -159,7 +159,7 @@ export default function MerchantInvoicePage() {
                 </div>
 
                 <div className="mt-4 flex justify-center">
-                  <QRCodeBlock value={payUrl} size={240} />
+                  <QRCodeBlock value={payUrl} />
                 </div>
 
                 <div className="mt-4 text-center text-xs text-gray-500 break-all">

@@ -41,7 +41,7 @@ export default function OnboardingDonePage() {
         </div>
 
         <div className="mt-5 flex justify-center">
-          <QRCodeBlock value={storePayUrl} size={220} />
+          <QRCodeBlock value={storePayUrl} />
         </div>
 
         <div className="mt-4 text-xs text-gray-500 break-all">{storePayUrl}</div>

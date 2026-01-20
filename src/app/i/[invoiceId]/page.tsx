@@ -20,6 +20,8 @@ import { parseUnits, type Hex } from "viem";
 import { Button, Card, Shell, Topbar, Pill } from "@/components/ui";
 import { usePublicClient } from "wagmi";
 
+export const dynamic = "force-dynamic";
+
 const USDC_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d" as const;
 
 const erc20Abi = [
@@ -38,7 +40,7 @@ const erc20Abi = [
 type Invoice = {
   id: string;
   amount: string;
-  recipientAddress: string;
+  recipientAddress: `0x${string}`;
   status: "PENDING" | "PAID" | "EXPIRED";
   txHash: string | null;
 };

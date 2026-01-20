@@ -8,11 +8,16 @@ import { Button, Card, Shell, Topbar, Pill } from "@/components/ui";
 export default function StoreQRPage() {
   const router = useRouter();
   const [merchantId, setMerchantId] = useState<string | null>(null);
+  const [merchantName, setMerchantName] = useState<string>("");
 
   useEffect(() => {
     const id = localStorage.getItem("merchantId");
+    const name = localStorage.getItem("merchantName");
     if (!id) router.push("/merchant/onboarding");
-    else setMerchantId(id);
+    else {
+      setMerchantId(id);
+      setMerchantName(name || "");
+    }
   }, [router]);
 
   const baseUrl = useMemo(() => {
@@ -49,7 +54,7 @@ export default function StoreQRPage() {
         </div>
 
         <div className="mt-5 flex justify-center">
-          <QRCodeBlock value={storeUrl} size={260} />
+          <QRCodeBlock value={storeUrl} />
         </div>
 
         <div className="mt-4 text-center text-xs text-gray-500 break-all">

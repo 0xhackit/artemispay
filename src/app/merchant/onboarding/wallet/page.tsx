@@ -6,6 +6,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { Button, Card, Input, Shell, Topbar, Pill } from "@/components/ui";
 
+export const dynamic = "force-dynamic";
+
 function isAddressLike(v: string) {
   return /^0x[a-fA-F0-9]{40}$/.test(v.trim());
 }
