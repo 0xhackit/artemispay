@@ -1,13 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import ClientProviders from "./ClientProviders";
 
-const Providers = dynamic(() => import("./Providers"), { ssr: false });
-
-export default function ClientProviders({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <Providers>{children}</Providers>;
+export default function Providers({ children }: { children: React.ReactNode }) {
+  return <ClientProviders>{children}</ClientProviders>;
 }

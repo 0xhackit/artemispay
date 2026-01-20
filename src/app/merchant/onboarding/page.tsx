@@ -9,7 +9,8 @@ export default function OnboardingWelcomePage() {
 
   // If already onboarded, go straight to home
   useEffect(() => {
-    const merchantId = localStorage.getItem("merchantId");
+    if (typeof window === "undefined") return;
+    const merchantId = window.localStorage.getItem("merchantId");
     if (merchantId) router.replace("/merchant/home");
   }, [router]);
 

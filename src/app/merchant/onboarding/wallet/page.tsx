@@ -20,7 +20,8 @@ export default function OnboardingWalletPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const name = localStorage.getItem("onboard_store_name");
+    if (typeof window === "undefined") return;
+    const name = window.localStorage.getItem("onboard_store_name");
     if (!name) router.replace("/merchant/onboarding/store");
     else setStoreName(name);
   }, [router]);
@@ -58,10 +59,10 @@ export default function OnboardingWalletPage() {
       const data = await res.json().catch(() => null);
       if (!res.ok) throw new Error(data?.error || "Failed to create store");
 
-      localStorage.setItem("merchantId", data.merchant.id);
-
-      // clear onboarding temp
-      localStorage.removeItem("onboard_store_name");
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("merchantId", data.merchant.id);
+        window.localStorage.removeItem("onboard_store_name");
+      }
 
       router.push("/merchant/onboarding/done");
     } catch (e: any) {

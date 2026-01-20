@@ -16,7 +16,7 @@ import {
   useWriteContract,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
-import { parseUnits, type Hex } from "viem";
+import { parseUnits, type Hex, isAddress, type Address } from "viem";
 import { Button, Card, Shell, Topbar, Pill } from "@/components/ui";
 import { usePublicClient } from "wagmi";
 
@@ -38,7 +38,7 @@ const erc20Abi = [
 type Invoice = {
   id: string;
   amount: string;
-  recipientAddress: string;
+  recipientAddress: Address;
   status: "PENDING" | "PAID" | "EXPIRED";
   txHash: string | null;
 };
@@ -118,21 +118,26 @@ export default function PayerPage() {
   
     setError(null);
   
+    if (!isAddress(invoice.recipientAddress)) {
+      setError("Invalid recipient address on this invoice.");
+      return;
+    }
+  
     if (chainId !== arbitrumSepolia.id) {
       await switchChainAsync({ chainId: arbitrumSepolia.id });
     }
   
+    const to = invoice.recipientAddress as Address;
     const amount = parseUnits(invoice.amount, 6);
   
     const fees = await publicClient.estimateFeesPerGas();
-  
     const bump = (x: bigint) => (x * 12n) / 10n;
   
     const hash = await writeContractAsync({
       address: USDC_ADDRESS,
       abi: erc20Abi,
       functionName: "transfer",
-      args: [invoice.recipientAddress, amount],
+      args: [to, amount],
       maxFeePerGas: fees.maxFeePerGas ? bump(fees.maxFeePerGas) : undefined,
       maxPriorityFeePerGas: fees.maxPriorityFeePerGas
         ? bump(fees.maxPriorityFeePerGas)

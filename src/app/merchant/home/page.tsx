@@ -24,7 +24,8 @@ export default function MerchantHome() {
   const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
-    const id = localStorage.getItem("merchantId");
+    if (typeof window === "undefined") return;
+    const id = window.localStorage.getItem("merchantId");
     if (!id) router.push("/merchant/onboarding");
     else setMerchantId(id);
   }, [router]);

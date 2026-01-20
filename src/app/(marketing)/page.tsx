@@ -268,7 +268,7 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-10 pb-6 text-sm text-black/50">
-            © {new Date().getFullYear()} Pay. All rights reserved.
+            © {new Date().getFullYear()} Artemis Pay. All rights reserved.
           </div>
         </section>
       </main>

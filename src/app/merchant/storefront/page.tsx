@@ -29,7 +29,8 @@ export default function StorefrontPage() {
       : process.env.NEXT_PUBLIC_BASE_URL || "";
 
   useEffect(() => {
-    const id = localStorage.getItem("merchantId");
+    if (typeof window === "undefined") return;
+    const id = window.localStorage.getItem("merchantId");
     if (!id) router.push("/merchant/onboarding");
     else setMerchantId(id);
   }, [router]);

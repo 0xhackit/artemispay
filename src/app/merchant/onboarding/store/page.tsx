@@ -9,14 +9,17 @@ export default function OnboardingStorePage() {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    const existing = localStorage.getItem("onboard_store_name");
+    if (typeof window === "undefined") return;
+    const existing = window.localStorage.getItem("onboard_store_name");
     if (existing) setName(existing);
   }, []);
 
   function next() {
     const trimmed = name.trim();
     if (!trimmed) return;
-    localStorage.setItem("onboard_store_name", trimmed);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("onboard_store_name", trimmed);
+    }
     router.push("/merchant/onboarding/wallet");
   }
 

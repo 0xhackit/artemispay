@@ -10,7 +10,8 @@ export default function OnboardingDonePage() {
   const [merchantId, setMerchantId] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = localStorage.getItem("merchantId");
+    if (typeof window === "undefined") return;
+    const id = window.localStorage.getItem("merchantId");
     if (!id) router.replace("/merchant/onboarding");
     else setMerchantId(id);
   }, [router]);

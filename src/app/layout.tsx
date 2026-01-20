@@ -1,15 +1,19 @@
-
-
+import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import Providers from "@/app/providers/Providers";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+export const metadata: Metadata = {
+  title: "Pay",
+  description: "Accept stablecoin payments globally",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans bg-[var(--brand-light)] text-[var(--brand-dark)]`}>
-        {children}
+      <body>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
